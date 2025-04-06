@@ -1,0 +1,9 @@
+.loading_screen {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(31, 32, 34, 0.80);
+    z-index: 1056;
+}
