@@ -1,0 +1,8 @@
+src
+actions: contiene los onsubmit de los formularios
+app: contiene las paginas
+components: contiene los archivos que usan librerias o plantillas de objetos
+context: contiene los context de las paginas
+styles: los estilos css individuales de las paginas
+ui: la parte visual de las paginas
+

@@ -1,4 +1,4 @@
-import styles from "../style/loading-screen.module.css";
+import styles from "../styles/loading-screen.module.css";
 
 const LoadingScreen = ({ display }: { display: boolean }) => {
   return (
