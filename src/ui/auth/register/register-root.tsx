@@ -1,5 +1,6 @@
 import Image from "next/image";
 import RegisterForm from "./register-form";
+import Footer from "@/ui/footer";
 
 const RegisterRoot = () => {
   return (
@@ -23,6 +24,9 @@ const RegisterRoot = () => {
           <RegisterForm />
         </div>
       </div>
+
+      <Footer />
+
     </div>
   );
 };

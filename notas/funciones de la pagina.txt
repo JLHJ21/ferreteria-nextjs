@@ -1,0 +1,8 @@
+FUNCIONES IDEAS
+-Ver ventas
+-Realizar ventas
+-Ver clientes
+-Ver las divisas que se pueden hacer con la conversion
+-Ver gastos
+-Ver prestamos
+-Realizar compras/lo de los proveedores

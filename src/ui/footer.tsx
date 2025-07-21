@@ -15,7 +15,6 @@ const Footer = () => {
               href="mailto:jorgeherediavzla@gmail.com"
             >
               <svg className="bi" width="24" height="24">
-                {/*<use xlink:href="#email"></use>*/}
               </svg>
             </a>
           </li>

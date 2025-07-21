@@ -2,7 +2,6 @@
 import { useState } from "react";
 import LoadingScreen from "./loading-screen";
 import BootstrapClient from "@/components/bootstrap-js";
-import Footer from "./footer";
 
 const Root = ({
   children,
@@ -16,7 +15,6 @@ const Root = ({
       {children}
       <LoadingScreen display={display} />
       <BootstrapClient />
-      <Footer />
     </main>
   );
 };

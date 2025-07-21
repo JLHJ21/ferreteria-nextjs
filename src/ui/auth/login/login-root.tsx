@@ -1,5 +1,6 @@
 import Image from "next/image";
 import LoginForm from "./login-form";
+import Footer from "@/ui/footer";
 
 const LoginRoot = () => {
   return (
@@ -22,6 +23,8 @@ const LoginRoot = () => {
           <LoginForm />
         </div>
       </div>
+      <Footer />
+
     </div>
   );
 };
