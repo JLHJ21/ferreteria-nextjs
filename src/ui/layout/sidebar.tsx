@@ -15,6 +15,26 @@ const Sidebar = () => {
             name: "Ventas",
             href: "/sales",
             active: router.split("/")[1] === "sales",
+        },
+        {
+            name: "Clientes",
+            href: "/clients",
+            active: router.split("/")[1] === "clients",
+        },
+        {
+            name: "Gastos",
+            href: "/bills",
+            active: router.split("/")[1] === "bills",
+        },
+        {
+            name: "Prestamos",
+            href: "/loans",
+            active: router.split("/")[1] === "loans",
+        },
+        {
+            name: "Compras",
+            href: "/purchases",
+            active: router.split("/")[1] === "purchases",
         }
     ]
 

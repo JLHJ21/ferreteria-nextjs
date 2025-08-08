@@ -1,17 +1,17 @@
 "use client";
 
-type SalesBodyProps = {
-    data: { id: number; product: string; amount: number; price: string }[];
+type ClientsBodyProps = {
+    data: { id: number; name: string; personalId: string }[];
 }
 
-const SalesBody = (props: SalesBodyProps) => {
-    const labelsTitle = ["#", "Producto", "Cantidad", "Precio", "Opciones"];
+const ClientsBody = (props: ClientsBodyProps) => {
+    const labelsTitle = ["#", "Nombre", "Cédula", "Opciones"];
 
     return (
         <div className="container">
             <div className="row px-5 py-3">
                 <div className="d-flex justify-content-between">
-                    <p className="fs-5 fw-bold mt-3 mb-0">Ventas</p>
+                    <p className="fs-5 fw-bold mt-3 mb-0">Clientes</p>
                 </div>
                 <div className="col-12 pb-2 table-responsive">
                     <div className="d-flex justify-content-between gap-3 my-3">
@@ -38,9 +38,8 @@ const SalesBody = (props: SalesBodyProps) => {
                                         return (
                                             <tr key={index}>
                                                 <th className="w-25" scope="row">{item.id}</th>
-                                                <td className="w-25">{item.product}</td>
-                                                <td className="w-25">{item.amount}</td>
-                                                <td className="w-25">{item.price}</td>
+                                                <td className="w-25">{item.name}</td>
+                                                <td className="w-25">{item.personalId}</td>
                                                 <td className="d-flex gap-2 justify-content-center">
                                                     <button className="btn btn-primary btn-sm text-truncate">Modificar</button>
                                                     <button className="btn btn-danger btn-sm text-truncate">Eliminar</button>
@@ -72,4 +71,4 @@ const SalesBody = (props: SalesBodyProps) => {
     )
 }
 
-export default SalesBody;
+export default ClientsBody;

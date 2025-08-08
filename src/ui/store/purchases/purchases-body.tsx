@@ -1,17 +1,17 @@
 "use client";
 
-type SalesBodyProps = {
-    data: { id: number; product: string; amount: number; price: string }[];
+type PurchasesBodyProps = {
+    data: { id: number; supplier: string; amount: number, money: string, date: string }[];
 }
 
-const SalesBody = (props: SalesBodyProps) => {
-    const labelsTitle = ["#", "Producto", "Cantidad", "Precio", "Opciones"];
+const PurchasesBody = (props: PurchasesBodyProps) => {
+    const labelsTitle = ["#", "Proveedor/es", "Cantidad de prd.", "Dinero", "Fecha", "Opciones"];
 
     return (
         <div className="container">
             <div className="row px-5 py-3">
                 <div className="d-flex justify-content-between">
-                    <p className="fs-5 fw-bold mt-3 mb-0">Ventas</p>
+                    <p className="fs-5 fw-bold mt-3 mb-0">Compras</p>
                 </div>
                 <div className="col-12 pb-2 table-responsive">
                     <div className="d-flex justify-content-between gap-3 my-3">
@@ -37,10 +37,11 @@ const SalesBody = (props: SalesBodyProps) => {
                                     props.data.map((item, index) => {
                                         return (
                                             <tr key={index}>
-                                                <th className="w-25" scope="row">{item.id}</th>
-                                                <td className="w-25">{item.product}</td>
-                                                <td className="w-25">{item.amount}</td>
-                                                <td className="w-25">{item.price}</td>
+                                                <td className="w-10" scope="row">{item.id}</td>
+                                                <td className="">{item.supplier}</td>
+                                                <td className="">{item.amount}</td>
+                                                <td className="">{item.money}</td>
+                                                <td className="">{item.date}</td>
                                                 <td className="d-flex gap-2 justify-content-center">
                                                     <button className="btn btn-primary btn-sm text-truncate">Modificar</button>
                                                     <button className="btn btn-danger btn-sm text-truncate">Eliminar</button>
@@ -72,4 +73,4 @@ const SalesBody = (props: SalesBodyProps) => {
     )
 }
 
-export default SalesBody;
+export default PurchasesBody;
