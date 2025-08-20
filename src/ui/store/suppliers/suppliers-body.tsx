@@ -1,17 +1,17 @@
 "use client";
 
-type LoansBodyProps = {
-    data: { id: number; giveTo: string; money: string, currency: string, paid: string; date: string, state: string }[];
+type SuppliersBodyProps = {
+    data: { id: number; direction: string; name: string, rif: string, status: string }[];
 }
 
-const LoansBody = (props: LoansBodyProps) => {
-    const labelsTitle = ["#", "Dado a", "Dinero", "Divisa", "Pagado", "Fecha", "Estado", "Opciones"];
+const SuppliersBody = (props: SuppliersBodyProps) => {
+    const labelsTitle = ["#", "Dirección", "Nombre", "RIF", "Estado", "Opciones"];
 
     return (
         <div className="container">
             <div className="row px-5 py-3">
                 <div className="d-flex justify-content-between">
-                    <p className="fs-5 fw-bold mt-3 mb-0">Prestamos</p>
+                    <p className="fs-5 fw-bold mt-3 mb-0">Proveedores</p>
                 </div>
                 <div className="col-12 pb-2 table-responsive">
                     <div className="d-flex justify-content-between gap-3 my-3">
@@ -38,12 +38,10 @@ const LoansBody = (props: LoansBodyProps) => {
                                         return (
                                             <tr key={index}>
                                                 <th className="w-10" scope="row">{item.id}</th>
-                                                <td className="">{item.giveTo}</td>
-                                                <td className="">{item.money}</td>
-                                                <td className="">{item.currency}</td>
-                                                <td className="">{item.paid}</td>
-                                                <td className="">{item.date}</td>
-                                                <td className="">{item.state}</td>
+                                                <td className="">{item.direction}</td>
+                                                <td className="">{item.name}</td>
+                                                <td className="">{item.rif}</td>
+                                                <td className="">{item.status}</td>
                                                 <td className="d-flex gap-2 justify-content-center">
                                                     <button className="btn btn-primary btn-sm text-truncate">Modificar</button>
                                                     <button className="btn btn-danger btn-sm text-truncate">Eliminar</button>
@@ -75,4 +73,4 @@ const LoansBody = (props: LoansBodyProps) => {
     )
 }
 
-export default LoansBody;
+export default SuppliersBody;

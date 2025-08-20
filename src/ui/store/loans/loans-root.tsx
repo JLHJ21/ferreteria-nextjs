@@ -4,21 +4,30 @@ const LoansRoot = () => {
     const data = [
         {
             id: 1,
-            reason: "Pago de Luz",
-            money: "30",
-            currency: "USD"
+            giveTo: "George",
+            money: "300",
+            currency: "USD",
+            paid: "100",
+            date: "10-10-2025",
+            state: "Activo"
         },
         {
             id: 2,
-            reason: "Pago de Luz",
+            giveTo: "George",
             money: "10,000",
-            currency: "COP"
+            currency: "COP",
+            paid: "5,000",
+            date: "10-10-2025",
+            state: "Activo"
         },
         {
             id: 3,
-            reason: "Pago de Gas",
-            money: "10",
-            currency: "USD"
+            giveTo: "George",
+            money: "100",
+            currency: "USD",
+            paid: "100",
+            date: "10-10-2025",
+            state: "Pagado"
         }
     ]
 

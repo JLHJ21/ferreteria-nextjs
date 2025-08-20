@@ -1,8 +1,15 @@
+"use client";
 import Image from "next/image";
 import RegisterForm from "./register-form";
 import Footer from "@/ui/footer";
+import RegisterModal from "./register-modal";
+import { useState } from "react";
+import Modal from "@/ui/templates/modal";
 
 const RegisterRoot = () => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [dataUser, setDataUser] = useState({ name: "", email: "" });
+
   return (
     <div className="container pt-5">
       <div className="row h-100">
@@ -21,9 +28,18 @@ const RegisterRoot = () => {
           <h2>Registrar cuenta</h2>
 
           <hr className="border border-black border-1 opacity-75" />
-          <RegisterForm />
+          <RegisterForm
+            open={open}
+            setOpen={setOpen}
+            setDataUser={setDataUser}
+          />
         </div>
       </div>
+
+
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <RegisterModal dataUser={dataUser} />
+      </Modal>
 
       <Footer />
 

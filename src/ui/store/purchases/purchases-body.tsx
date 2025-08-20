@@ -1,5 +1,7 @@
 "use client";
 
+import PurchasesCharts from "./purchases-charts";
+
 type PurchasesBodyProps = {
     data: { id: number; supplier: string; amount: number, money: string, date: string }[];
 }
@@ -13,7 +15,12 @@ const PurchasesBody = (props: PurchasesBodyProps) => {
                 <div className="d-flex justify-content-between">
                     <p className="fs-5 fw-bold mt-3 mb-0">Compras</p>
                 </div>
+                <PurchasesCharts />
+
                 <div className="col-12 pb-2 table-responsive">
+
+                    <hr />
+
                     <div className="d-flex justify-content-between gap-3 my-3">
                         <input type="email" className="form-control" placeholder="Buscar..." />
                         <button className="btn btn-primary">Buscar</button>

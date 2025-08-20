@@ -1,19 +1,38 @@
 "use client";
 
+import { sendRegister } from "@/actions/register/action-register";
 import ButtonRedirection from "@/components/buttons/button-redirection";
 import ButtonSimple from "@/components/buttons/button-simple";
 import InputWithSpan from "@/components/inputs/input-span";
 import validation from "@/components/validations-regex";
-import { useState } from "react";
+import ErrorsProcess from "@/ui/errors-handling/errors-process";
+import { Dispatch, SetStateAction, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 
 type InputsSubmit = {
-  emailInputLogin: string;
-  passwordInputLogin: string;
+  firstInput: string;
+  lastInput: string;
+  emailInput: string;
+  passwordInput: string;
+  repeatInput: string;
 };
 
-const RegisterForm = () => {
+type RegisterFormProps = {
+  open: boolean;
+  setOpen: (value: React.SetStateAction<boolean>) => void;
+  setDataUser: Dispatch<
+    SetStateAction<{
+      name: string;
+      email: string;
+    }>
+  >;
+};
+
+
+const RegisterForm = (props: RegisterFormProps) => {
   const [errorsGlobal, setErrorsGlobal] = useState("");
+  const { callsModal } = ErrorsProcess();
+
   const {
     register,
     handleSubmit,
@@ -21,7 +40,22 @@ const RegisterForm = () => {
   } = useForm<InputsSubmit>();
 
   const onSubmit: SubmitHandler<InputsSubmit> = async (data) => {
-    /**/
+    const result = await sendRegister(
+      data.firstInput,
+      data.lastInput,
+      data.emailInput,
+      data.passwordInput,
+      data.repeatInput
+    );
+    if (result.ok === true) {
+      props.setOpen(true);
+      props.setDataUser({
+        name: result.result.name,
+        email: result.result.email,
+      });
+    } else {
+      callsModal({ error: result.code, message: result.result.email });
+    }
   };
 
   const { patternText } = validation();

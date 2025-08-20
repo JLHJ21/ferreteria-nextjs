@@ -1,6 +1,6 @@
-import BillsBody from "./bills-body";
+import CurrenciesBody from "./currencies-body";
 
-const BillsRoot = () => {
+const CurrenciesRoot = () => {
     const data = [
         {
             id: 1,
@@ -26,8 +26,8 @@ const BillsRoot = () => {
     ]
 
     return (
-        <BillsBody data={data} />
+        <CurrenciesBody data={data} />
     );
 };
 
-export default BillsRoot;
+export default CurrenciesRoot;

@@ -1,11 +1,12 @@
 "use client";
+import BillsCharts from "./bills-chart";
 
 type BillsBodyProps = {
-    data: { id: number; reason: string; money: string, currency: string }[];
+    data: { id: number; reason: string; money: string, currency: string, date: string }[];
 }
 
 const BillsBody = (props: BillsBodyProps) => {
-    const labelsTitle = ["#", "Razón", "Dinero", "Fecha", "Opciones"];
+    const labelsTitle = ["#", "Razón", "Dinero", "Divisa", "Fecha", "Opciones"];
 
     return (
         <div className="container">
@@ -13,6 +14,9 @@ const BillsBody = (props: BillsBodyProps) => {
                 <div className="d-flex justify-content-between">
                     <p className="fs-5 fw-bold mt-3 mb-0">Gastos</p>
                 </div>
+
+                <BillsCharts />
+
                 <div className="col-12 pb-2 table-responsive">
                     <div className="d-flex justify-content-between gap-3 my-3">
                         <input type="email" className="form-control" placeholder="Buscar..." />
@@ -37,10 +41,11 @@ const BillsBody = (props: BillsBodyProps) => {
                                     props.data.map((item, index) => {
                                         return (
                                             <tr key={index}>
-                                                <th className="w-25" scope="row">{item.id}</th>
-                                                <td className="w-25">{item.reason}</td>
-                                                <td className="w-25">{item.money}</td>
-                                                <td className="w-25">{item.currency}</td>
+                                                <th className="w-10" scope="row">{item.id}</th>
+                                                <td className="">{item.reason}</td>
+                                                <td className="">{item.money}</td>
+                                                <td className="">{item.date}</td>
+                                                <td className="">{item.currency}</td>
                                                 <td className="d-flex gap-2 justify-content-center">
                                                     <button className="btn btn-primary btn-sm text-truncate">Modificar</button>
                                                     <button className="btn btn-danger btn-sm text-truncate">Eliminar</button>

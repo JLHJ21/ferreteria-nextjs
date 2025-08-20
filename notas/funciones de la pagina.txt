@@ -5,4 +5,5 @@ FUNCIONES IDEAS
 -Ver las divisas que se pueden hacer con la conversion
 -Ver gastos "HECHO"
 -Ver prestamos "HECHO"
+- Ver proveedores "HECHO"
 -Realizar compras/lo de los proveedores
