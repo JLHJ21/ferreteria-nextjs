@@ -1,12 +1,15 @@
 "use client";
+import Link from "next/link";
 
 type CurrenciesBodyProps = {
-    data: { id: number; reason: string; money: string, currency: string, date: string }[];
+    data: {
+        currencies: { name: string, money: string, state: string }[],
+        conversion: { from_name: string, to_name: string, number: string, operation: string }[];
+    }[]
 }
 
 const CurrenciesBody = (props: CurrenciesBodyProps) => {
     const labelsTitle = ["Divisa - Preferencial", "Divisa - Convertir", "Conversión"];
-
     const itemsCurrencies = ["Dólares", "Pesos", "Bolívares"]
 
     return (
@@ -15,12 +18,16 @@ const CurrenciesBody = (props: CurrenciesBodyProps) => {
 
                 <div className="col-6 border rounded p-4">
 
-                    <h2>Información</h2>
-
+                    <div className="d-flex justify-content-between">
+                        <h2>Información</h2>
+                        <Link href={'currencies/add'} >
+                            <button type="button" className="btn btn-primary">Nuevo</button>
+                        </Link>
+                    </div>
 
                     <p className="mb-2">Divisa preferencial</p>
 
-                    <select className="form-select" aria-label="Default select example">
+                    <select className="form-select mb-2" aria-label="Default select example" disabled>
                         {
                             itemsCurrencies.map((item, index) => {
                                 return (
@@ -29,9 +36,9 @@ const CurrenciesBody = (props: CurrenciesBodyProps) => {
                             })
                         }
                     </select>
-                    <div className="d-flex justify-content-end">
+                    {/*<div className="d-flex justify-content-end">
                         <button className="btn btn-primary mt-2">Enviar</button>
-                    </div>
+                    </div>*/}
 
                     <h5 className="pt-2">Dinero en caja registradora</h5>
                     <table className="table table-hover table-sm">
@@ -42,19 +49,16 @@ const CurrenciesBody = (props: CurrenciesBodyProps) => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td className="w-25">Dólares</td>
-                                <td className="w-25">213</td>
-                            </tr>
-                            <tr>
-                                <td className="w-25">Pesos</td>
-                                <td className="w-25">52,000</td>
-                            </tr>
-
-                            <tr>
-                                <td className="w-25">Bolívares</td>
-                                <td className="w-25">1,358.52</td>
-                            </tr>
+                            {
+                                props.data[0].currencies.map((curreny, i) => {
+                                    return (
+                                        <tr key={i}>
+                                            <td className="w-25">{curreny.name}</td>
+                                            <td className="w-25">{curreny.money}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
 
                         </tbody>
                     </table>
@@ -73,23 +77,17 @@ const CurrenciesBody = (props: CurrenciesBodyProps) => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td className="w-25">Dólares</td>
-                                <td className="w-25">Pesos</td>
-                                <td className="w-25">1 = 4,000</td>
-                            </tr>
-                            <tr>
-                                <td className="w-25">Dólares</td>
-                                <td className="w-25">Bolívares</td>
-                                <td className="w-25">1 = 131,12</td>
-                            </tr>
-
-                            <tr>
-                                <td className="w-25">Dólares</td>
-                                <td className="w-25">Euros</td>
-                                <td className="w-25">1 = 0,86</td>
-                            </tr>
-
+                            {
+                                props.data[0].conversion.map((item, i) => {
+                                    return (
+                                        <tr key={i}>
+                                            <td className="w-25">{item.from_name}</td>
+                                            <td className="w-25">{item.to_name}</td>
+                                            <td className="w-25">{`1 = 1 ${item.operation} ${item.number}`}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
                         </tbody>
                     </table>
 
@@ -115,24 +113,16 @@ const CurrenciesBody = (props: CurrenciesBodyProps) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td className="w-25">Dólares</td>
-                                            <td className="w-25 text-center">Activo</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="w-25">Pesos</td>
-                                            <td className="w-25 text-center">Activo</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td className="w-25">Bolívares</td>
-                                            <td className="w-25 text-center">Activo</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td className="w-25">Euros</td>
-                                            <td className="w-25 text-center">Eliminado</td>
-                                        </tr>
+                                        {
+                                            props.data[0].currencies.map((curreny, i) => {
+                                                return (
+                                                    <tr key={i}>
+                                                        <td className="w-25">{curreny.name}</td>
+                                                        <td className="w-25">{curreny.state}</td>
+                                                    </tr>
+                                                )
+                                            })
+                                        }
                                     </tbody>
 
 

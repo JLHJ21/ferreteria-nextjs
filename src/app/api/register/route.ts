@@ -11,8 +11,8 @@ type propsConfirmUser = {
 
 type propsCreateUser = {
     passwordUser: string;
-    firstUser: string;
-    lastUser: string;
+    name: string;
+    username: string;
     emailUser: string;
 };
 
@@ -28,7 +28,7 @@ const confirmUser = async (props: propsConfirmUser) => {
 
     //check data in users table
     const checkUser = await connectionPool.query(
-        `SELECT u.email, ud.state_id FROM public.user AS u 
+        `SELECT u.user_email, ud.state_id FROM public.user AS u 
     INNER JOIN user_data AS ud ON ud.user_id = u.user_id 
     WHERE ud.user_data_id = $1 LIMIT 1;`,
         [props.identification]
@@ -80,8 +80,8 @@ const confirmUser = async (props: propsConfirmUser) => {
 
 const addUser = async (request: Request) => {
     //check if the required inputs are send, it is a validation input
-    const { first, last, email, password, repeat } = await request.json();
-    if (!first || !last || !email || !password || !repeat) {
+    const { username, name, email, password, repeat } = await request.json();
+    if (!username || !name || !email || !password || !repeat) {
         return {
             ok: false,
             code: 400,
@@ -106,27 +106,27 @@ const addUser = async (request: Request) => {
     //add the data into the database, users
     const userId = await createUser({
         passwordUser: password,
-        firstUser: first,
-        lastUser: last,
+        username: username,
+        name: name,
         emailUser: email,
     });
     //and later users_data
     const userDataId = await createUserData(userId);
 
     //send the email confirmation to verify the account
-    await sendConfirmationEmailAndInsertIntoDatabase(userDataId, email, first);
+    await sendConfirmationEmailAndInsertIntoDatabase(userDataId, email, name);
 
     return {
         ok: true,
         code: 201,
-        information: { name: first, email: email },
+        information: { name: name, email: email },
     };
 };
 
 const checkEmail = async (email: string) => {
     //extract data from database
     const checkEmail = await connectionPool.query(
-        "SELECT user_id FROM public.user WHERE email = $1 LIMIT 1;",
+        "SELECT user_id FROM public.user WHERE user_email = $1 LIMIT 1;",
         [email]
     );
     //check if return some data to check if the email exist
@@ -144,10 +144,10 @@ const createUser = async (props: propsCreateUser) => {
     const hashedPassword = await bcryptjs.hash(props.passwordUser, 10);
     const userId = await connectionPool.query(
         `
-    INSERT INTO public.user (first_name, last_name, email, password) 
+    INSERT INTO public.user (user_username, user_name, user_email, user_password) 
     VALUES ($1,$2,$3,$4)
     RETURNING user_id;`,
-        [props.firstUser, props.lastUser, props.emailUser, hashedPassword]
+        [props.username, props.name, props.emailUser, hashedPassword]
     );
 
     return userId.rows[0].user_id;

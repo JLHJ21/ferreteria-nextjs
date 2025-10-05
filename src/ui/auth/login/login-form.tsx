@@ -4,11 +4,12 @@ import ButtonRedirection from "@/components/buttons/button-redirection";
 import ButtonSimple from "@/components/buttons/button-simple";
 import CheckboxWithLabel from "@/components/inputs/checkbox-with-label";
 import InputWithSpan from "@/components/inputs/input-span";
-import validation from "@/components/validations-regex";
+import validation from "@/utils/validations-regex";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import TextOpenModal from "../text-open-modal";
 import TextErrors from "@/components/errors/text-errors";
 import { useState } from "react";
+import ErrorsProcess from "@/ui/errors-handling/errors-process";
 
 type InputsSubmit = {
   userInput: string;
@@ -22,9 +23,21 @@ const LoginForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<InputsSubmit>();
+  const { callsModal } = ErrorsProcess();
 
   const onSubmit: SubmitHandler<InputsSubmit> = async (data) => {
-    /**/
+    const result = await sendRegister(
+      data.firstInput,
+      data.lastInput,
+      data.emailInput,
+      data.passwordInput,
+      data.repeatInput
+    );
+    if (result.ok === true) {
+      alert('Divisa creada');
+    } else {
+      callsModal({ error: result.code, message: result.result.email });
+    }
   };
 
   const { patternText } = validation();

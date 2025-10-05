@@ -29,34 +29,13 @@ const InputDisabled = <T extends FieldValues>({
   errors,
   ...props
 }: propsInput<T>) => {
-  const classLabel =
-    "text-gray-light text-base leading-5 font-medium h-5 pb-2 w-auto truncate";
-  const classInput =
-    "focus:outline-blacktext-base placeholder:font-normal placeholder:text-base placeholder:truncate placeholder:leading-[20px] grid gap-[0.625rem] gray-light-soft h-11 p-3 rounded-[0.25rem] border border-pastel-soft";
-
-  const extraLabelSpan = () => {
-    const html = (
-      <div className="flex flex-wrap justify-between h-5">
-        <label htmlFor={id} className={classLabel}>
-          {props.labelTitle}
-        </label>
-        <span className="flex justify-end ml-auto text-black text-sm leading-4 font-medium hover:underline hover:cursor-pointer max-w-[7.063rem] truncate items-center">
-          {props.spanInput}
-        </span>
-      </div>
-    );
-    return html;
-  };
-
+  const classDiv = "input-group has-validation";
+  const classLabel = "form-label mb-1";
+  const classInput = "form-control";
+  const classError = "text-red-700 flex align-start";
   return (
     <div className={props.classContainer}>
-      {props.spanInput !== false ? (
-        extraLabelSpan()
-      ) : (
-        <label htmlFor={id} className={classLabel}>
-          {props.labelTitle}
-        </label>
-      )}
+
       <input
         disabled
         className={classInput}
@@ -72,8 +51,12 @@ const InputDisabled = <T extends FieldValues>({
           maxLength: props.inputPattern.max,
         })}
       />
+
+      {/* VALIDACION */}
+      <div className="invalid-feedback">{props.labelError}</div>
+
       {errors[id] && (
-        <small className="text-red-700 flex align-start">
+        <small className={classError}>
           <small>{props.labelError}</small>
         </small>
       )}

@@ -3,7 +3,7 @@ import type React from "react";
 import { useContext } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import LoginContext from "./login-context";
-import validation from "@/components/validations-regex";
+import validation from "@/utils/validations-regex";
 import { confirmCode } from "@/actions/login/action-login";
 import InputDisabled from "@/components/inputs/input-disabled";
 import Input from "@/components/inputs/input";

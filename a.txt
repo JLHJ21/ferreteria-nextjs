@@ -1,0 +1,137 @@
+base de datos
+
+USERS (tabla)
+user_id (primary key)
+email (varchar 255)
+password (text)
+
+USERS_DATA (tabla)
+user_data_id (primary key)
+user_id (foreign key de users"user_id")
+state_id (foreign key de states "state_id")
+
+STATES (tabla)
+state_id (primary key)
+state_name (varchar 20)
+
+CLIENTS (tabla)
+client_id (primary key)
+client_name (varchar 255)
+client_document (varchar 50)
+
+CLIENTS_DATA (tabla)
+client_data_id (primary key)
+client_id (foreign key de clients"client_id")
+state_id (foreign key de states"state_id")
+
+EXCHANGES (tabla)
+exchange_id (primary key)
+exchange_name (varchar 255)
+exchange_money (decimal 12,2)
+
+EXCHANGES_DATA (tabla)
+exchange_data_id (primary key)
+exchange_id (foreign key de exchanges"exchange_id")
+state_id (foreign key de states"state_id")
+
+EXCHANGES_CONVERSION (tabla)
+exchange_conversion_id (primary key)
+exchange_converter_id (foreign key de exchanges_data"exchange_data_id")
+exchange_to_convert_id (foreign key de exchanges_data"exchange_data_id")
+exchange_converter_number (decimal 12,2)
+exchange_to_convert_number (decimal 12,2)
+exchange_operation (varchar 50)
+
+SUPPLIERS (tabla)
+supplier_id (primary key)
+supplier_name (varchar 255)
+supplier_rif (varchar 50)
+supplier_address (varchar 255)
+
+SUPPLIERS_DATA (tabla)
+supplier_data_id (primary key)
+supplier_id (foreign key de suppliers"supplier_id")
+state_id (foreign key de states"state_id")
+
+LOANS (tabla)
+loan_id (primary key)
+loan_money (decimal 12,2)
+loan_exchange (decimal 12,2)
+loan_paid (decimal 12,2)
+loan_date (TIMESTAMPTZ)
+
+LOANS_DATA (tabla)
+loan_data_id (primary key)
+loan_id (foreign key de loans"loan_id")
+client_data_id (foreign key de clients_data"client_data_id")
+state_id (foreign key de states"state_id")
+
+BILLS (tabla)
+bill_id (primary key)
+bill_reason (varchar 255)
+bill_money (decimal 12,2)
+bill_exchange (decimal 12,2)
+bill_date (TIMESTAMPTZ)
+
+BILLS_DATA (tabla)
+bill_data_id (primary key)
+bill_id (foreign key de bills"bill_id")
+state_id (foreign key de states"state_id")
+
+PRODUCTS (tabla)
+product_id (primary key)
+product_name (varchar 255)
+product_amount (decimal 12,2)
+product_price (decimal 12,2)
+
+PRODUCTS_DATA (tabla)
+product_data_id (primary key)
+product_id (foreign key de products"product_id")
+supplier_data_id (foreign key de suppliers_data"supplier_data_id")
+state_id (foreign key de states"state_id")
+
+SHOPPING (tabla)
+shopping_id (primary key)
+shopping_money (decimal 12,2)
+shopping_products (INTEGER)
+shopping_date (TIMESTAMPTZ)
+
+SHOPPING_DATAS (tabla)
+shopping_data_id (primary key)
+shopping_id (foreign key de shopping"shopping_id")
+state_id (foreign key de states"state_id")
+
+SHOPPING_PRODUCTS (tabla)
+shopping_product_id (primary key)
+shopping_data_id (foreign key de shopping_data"shopping_data_id")
+product_data_id (foreign key de products_data"product_data_id")
+shopping_amount (integer)
+shopping_price (decimal 12,2)
+
+SELLS (tabla)
+sell_id (primary key)
+sell_products (integer)
+sell_money (decimal 12,2)
+sell_date (TIMESTAMPTZ)
+
+SELLS_DATA (tabla)
+sell_data_id (primary key)
+sell_id (foreign key de sells"sell_id")
+client_data_id  (foreign key de clients_data"client_data_id")
+state_id (foreign key de states"state_id")
+
+SELLS_PRODUCTS (tabla)
+sell_product_id (primary key)
+sell_data_id  (foreign key de sells_data"sell_data_id")
+product_data_id (foreign key de products_data"product_data_id")
+sell_product_amount (integer)
+sell_product_price (decimal 12,2)
+
+SELLS_PAYMENTS (tabla)
+sell_payment_id (primary key)
+sell_data_id (foreign key de sells_data"sell_data_id")
+exchange_data_id (foreign key de exchanges_data"exchange_data_id")
+sell_payment_money (decimal 12,2)
+
+
+

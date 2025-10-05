@@ -1,0 +1,6 @@
+exchanges_conversion
+exchange_conversion_id primary key
+exchange_converter_id (nueva divisa)
+exchange_to convert_id (X divisa)
+exchange_to_convert_number (numero)
+exchange:opration

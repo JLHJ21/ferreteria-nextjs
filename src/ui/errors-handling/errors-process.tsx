@@ -1,6 +1,6 @@
 "use client";
+import { ErrorsGroup } from "@/utils/errors";
 import ErrorsContext from "./errors-context";
-import { errorsGroup } from "../../_utils/errors";
 import { useContext } from "react";
 
 type propsErrors = {
@@ -15,7 +15,7 @@ type propsCheck = {
 const ErrorsProcess = () => {
   const { setOpenError, setErrorTitle, setMessageError } =
     useContext(ErrorsContext);
-  const errors = errorsGroup();
+  const errors = ErrorsGroup();
 
   const checkError = (props: propsCheck) => {
     let actualError = "";

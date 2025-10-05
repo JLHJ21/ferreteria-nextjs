@@ -6,24 +6,55 @@ const Line = dynamic(() => import('react-chartjs-2').then((mod) => mod.Line), {
 });
 
 
-const BarChart = ({ label }: { label: string }) => {
+const BarChart = ({ label, results }: { label: string, results?: { month: string, money: string }[] }) => {
+
+    const cleanNumber = (number: string) => {
+        return parseFloat(number.replace(/\./g, "").replace(",", "."))
+    }
 
     const data = {
-        labels: ['Enero', 'Febrero', "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Noviembre", "Diciembre"],
+        labels:
+            results ? results.map((g) => g.month) : ['Enero', 'Febrero', "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Noviembre", "Diciembre"],
         datasets: [
             {
                 label: label,
-                data: [65, 59, 80, 81, 56, 65, 59, 80, 81, 55, 98],
+                data: results ? results.map((r) => cleanNumber(r.money)) : [65, 59, 80, 81, 56, 65, 59, 80, 81, 55, 98],
                 fill: false,
                 borderColor: 'rgb(75, 192, 192)',
                 tension: 0.1,
             },
         ],
     };
+
+    const options = {
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: (context: any) =>
+                        `${context.dataset.label}: ${context.parsed.y.toLocaleString("es-ES", {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        })}`,
+                },
+            },
+        },
+        scales: {
+            y: {
+                ticks: {
+                    callback: (value: number | string) =>
+                        Number(value).toLocaleString("es-ES", {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        }),
+                },
+            },
+        },
+    };
+
     return (
-        <div className='h-100' style={{ position: "relative", height: "300px" }}>
-            <Line data={data} />
-        </div>
+        <div className='h-100' style={{ position: "relative", height: "300px" }} >
+            <Line data={data} options={options} />
+        </div >
 
     );
 };

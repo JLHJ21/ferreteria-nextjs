@@ -1,79 +1,97 @@
 "use client";
+import Link from "next/link";
 import BillsCharts from "./bills-chart";
+import { GenericTable } from "@/ui/templates/table";
+import { TableColumn } from "react-data-table-component";
+import { useState } from "react";
+import BillContext from "./bill-context";
 
 type BillsBodyProps = {
-    data: { id: number; reason: string; money: string, currency: string, date: string }[];
+    data: { id: number; reason: string; money: string, currency: string, date: string, status: string }[];
+    graphics: { month: string, money: string }[],
 }
 
+
+type Bills = {
+    id: number; reason: string; money: string, currency: string, date: string, status: string
+};
 const BillsBody = (props: BillsBodyProps) => {
-    const labelsTitle = ["#", "Razón", "Dinero", "Divisa", "Fecha", "Opciones"];
+    const columns: TableColumn<Bills>[] = [
+        {
+            name: '#',
+            selector: row => row.id,
+            sortable: true,
+            width: "5rem"
+        },
+        {
+            name: 'Razón',
+            selector: row => row.reason,
+            sortable: true,
+        },
+        {
+            name: 'Dinero',
+            selector: row => row.money,
+            sortable: true,
+        },
+        {
+            name: 'Divisa',
+            selector: row => row.currency,
+            sortable: true,
+            width: "10rem"
+
+        },
+        {
+            name: 'Fecha',
+            selector: row => row.date,
+            sortable: true,
+            width: "10rem"
+
+        },
+        {
+            name: "Opciones",
+            cell: (row) => (
+                <div className="d-flex gap-2 justify-content-center">
+                    <button
+                        className="btn btn-primary btn-sm text-truncate"
+                        onClick={() => console.log("Modificar", row.id)}
+                    >
+                        Modificar
+                    </button>
+                    <button
+                        className="btn btn-danger btn-sm text-truncate"
+                        onClick={() => console.log("Eliminar", row.id)}
+                    >
+                        Eliminar
+                    </button>
+                </div>
+            ),
+            ignoreRowClick: true,
+        },
+    ];
+    const [secondGraphic, setSecondGraphic] = useState<{ month: string, money: string }[]>([{ month: "", money: "" }])
 
     return (
-        <div className="container">
-            <div className="row px-5 py-3">
-                <div className="d-flex justify-content-between">
-                    <p className="fs-5 fw-bold mt-3 mb-0">Gastos</p>
-                </div>
-
-                <BillsCharts />
-
-                <div className="col-12 pb-2 table-responsive">
-                    <div className="d-flex justify-content-between gap-3 my-3">
-                        <input type="email" className="form-control" placeholder="Buscar..." />
-                        <button className="btn btn-primary">Buscar</button>
-                    </div>
-                    <div className="border rounded p-2">
-
-                        <table className="table table-hover table-sm">
-                            <thead>
-                                <tr>
-                                    {
-                                        labelsTitle.map((label, index) => {
-                                            return (
-                                                <th className={`${label === "Opciones" && "text-center"} `} scope="col" key={index}>{label}</th>
-                                            )
-                                        })
-                                    }
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    props.data.map((item, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <th className="w-10" scope="row">{item.id}</th>
-                                                <td className="">{item.reason}</td>
-                                                <td className="">{item.money}</td>
-                                                <td className="">{item.date}</td>
-                                                <td className="">{item.currency}</td>
-                                                <td className="d-flex gap-2 justify-content-center">
-                                                    <button className="btn btn-primary btn-sm text-truncate">Modificar</button>
-                                                    <button className="btn btn-danger btn-sm text-truncate">Eliminar</button>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-
-
-                        </table>
-
+        <BillContext.Provider value={{ secondGraphic, setSecondGraphic }}>
+            <div className="container">
+                <div className="row px-5 py-3">
+                    <div className="d-flex justify-content-between mb-2">
+                        <p className="fs-5 fw-bold mt-3">Gastos</p>
+                        <Link href={'bills/add'} >
+                            <button type="button" className="btn btn-primary">Nuevo</button>
+                        </Link>
                     </div>
 
-                </div>
+                    <BillsCharts graphics={props.graphics} />
 
-                <nav className="d-flex justify-content-center mt-2" aria-label="Page navigation example">
-                    <ul className="pagination">
-                        <li className="page-item"><a className="page-link" href="#">Previous</a></li>
-                        <li className="page-item"><a className="page-link" href="#">1</a></li>
-                        <li className="page-item"><a className="page-link" href="#">2</a></li>
-                        <li className="page-item"><a className="page-link" href="#">3</a></li>
-                        <li className="page-item"><a className="page-link" href="#">Next</a></li>
-                    </ul>
-                </nav>
+                    <GenericTable<Bills>
+                        data={props.data}
+                        columns={columns}
+                        filterKeys={["id", "reason", "money", "currency", "date", "status"]}
+                    />
+                </div>
             </div>
-        </div>
+        </BillContext.Provider>
+
     )
 }
 

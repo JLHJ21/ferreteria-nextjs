@@ -1,0 +1,7 @@
+crear input de fechas. crear 2 graphics, el estatico y el dinamico (cambio con los inputs) preguntar a chatgpt para hacer que si es de 7 dias mostrar lunes..., una semana semana 1..., mes enero..., año 2025 ...
+
+
+hacer logica de pagina Inicio
+hacer logica de pagina Ventas
+terminar logica de pagina Prestamos (Permitir que se pueda pagar ese prestamo)
+hacer logica de pagina Compras

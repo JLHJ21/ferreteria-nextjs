@@ -1,24 +1,9 @@
+import { getClients } from "@/app/api/clients/add/route";
 import ClientsBody from "./clients-body";
 
-const ClientsRoot = () => {
+const ClientsRoot = async () => {
 
-    const data = [
-        {
-            id: 1,
-            name: "Pintura",
-            personalId: "V-12345",
-        },
-        {
-            id: 2,
-            name: "Brocha",
-            personalId: "V-12345",
-        },
-        {
-            id: 3,
-            name: "Pintura",
-            personalId: "V-12345",
-        }
-    ]
+    const data = await getClients();
 
     return (
         <ClientsBody data={data} />

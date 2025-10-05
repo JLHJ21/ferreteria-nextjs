@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import Modal from "../modal";
 import ErrorsContext from "./errors-context";
 import ErrorsModal from "./errors-body";
+import Modal from "../templates/modal";
 
 const CallErrorsModal = ({
   children,

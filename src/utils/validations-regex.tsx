@@ -11,9 +11,17 @@ const validation = () => {
     return regexEmail;
   };
 
+  const patternNumber = () => {
+    const regexNumber: RegExp = /^(\d{1,3}(,\d{3})*|\d+)(\,.\d{0,6})?$/i;
+    return regexNumber;
+  };
+
+
+
   return {
     patternEmail,
     patternText,
+    patternNumber
   };
 };
 

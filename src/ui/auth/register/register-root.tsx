@@ -36,9 +36,8 @@ const RegisterRoot = () => {
         </div>
       </div>
 
-
-      <Modal open={open} onClose={() => setOpen(false)}>
-        <RegisterModal dataUser={dataUser} />
+      <Modal open={true} onClose={() => setOpen(false)}>
+        <RegisterModal dataUser={dataUser} open={true} onClose={() => setOpen(false)} />
       </Modal>
 
       <Footer />

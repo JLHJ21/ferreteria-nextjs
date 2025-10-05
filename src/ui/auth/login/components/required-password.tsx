@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import LoginContext from "./login-context";
 import ErrorsProcess from "@/ui/errors-handling/errors-process";
-import validation from "@/components/validations-regex";
+import validation from "@/utils/validations-regex";
 import { changePassword } from "@/actions/login/action-login";
 import Input from "@/components/inputs/input";
 

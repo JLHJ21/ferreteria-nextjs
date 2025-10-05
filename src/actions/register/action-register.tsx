@@ -2,8 +2,8 @@
 import axiosCustom from "@/app/api/axios";
 
 export async function sendRegister(
-    firstName: string,
-    lastName: string,
+    username: string,
+    name: string,
     email: string,
     password: string,
     repeat: string
@@ -15,8 +15,8 @@ export async function sendRegister(
     if (password === repeat) {
         const formData = new FormData();
 
-        formData.append("first", firstName);
-        formData.append("last", lastName);
+        formData.append("username", username);
+        formData.append("name", name);
         formData.append("email", email);
         formData.append("password", password);
         formData.append("repeat", repeat);

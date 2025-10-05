@@ -4,14 +4,15 @@ import { sendRegister } from "@/actions/register/action-register";
 import ButtonRedirection from "@/components/buttons/button-redirection";
 import ButtonSimple from "@/components/buttons/button-simple";
 import InputWithSpan from "@/components/inputs/input-span";
-import validation from "@/components/validations-regex";
+import validation from "@/utils/validations-regex";
 import ErrorsProcess from "@/ui/errors-handling/errors-process";
-import { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import TextErrors from "@/components/errors/text-errors";
 
 type InputsSubmit = {
-  firstInput: string;
-  lastInput: string;
+  userInput: string;
+  nameInput: string;
   emailInput: string;
   passwordInput: string;
   repeatInput: string;
@@ -40,9 +41,11 @@ const RegisterForm = (props: RegisterFormProps) => {
   } = useForm<InputsSubmit>();
 
   const onSubmit: SubmitHandler<InputsSubmit> = async (data) => {
+
+    if (data.passwordInput !== data.repeatInput) return setErrorsGlobal("Las contraseñas no coinciden");
     const result = await sendRegister(
-      data.firstInput,
-      data.lastInput,
+      data.userInput,
+      data.nameInput,
       data.emailInput,
       data.passwordInput,
       data.repeatInput
@@ -58,104 +61,109 @@ const RegisterForm = (props: RegisterFormProps) => {
     }
   };
 
-  const { patternText } = validation();
+  const { patternText, patternEmail } = validation();
   const patternTextRegex = { pattern: patternText(), min: 3, max: 150 };
+  const patternEmailRegex = { pattern: patternEmail(), min: 3, max: 150 };
+
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="needs-validation"
-      noValidate
-    >
-      {/*method="POST"*/}
-      <InputWithSpan
-        classContainer={"col-12 "}
-        labelTitle={"Nombre de usuario"}
-        id={"userInput"}
-        inputType={"text"}
-        inputPlaceholder={"Escribe tu nombre de usuario"}
-        inputPattern={patternTextRegex}
-        labelError={"El campo 'nombre de usuario' es requerido"}
-        spanInput={false}
-        register={register}
-        errors={errors}
-        iconSpan={"@"}
-      />
-
-      <InputWithSpan
-        classContainer={"col-12 pt-3"}
-        labelTitle={"Nombre personal"}
-        id={"nameInput"}
-        inputType={"text"}
-        inputPlaceholder={"Escribe tu nombre personal"}
-        inputPattern={patternTextRegex}
-        labelError={"El campo 'nombre personal' es requerido"}
-        spanInput={false}
-        register={register}
-        errors={errors}
-        iconSpan={"@"}
-      />
-
-      <InputWithSpan
-        classContainer={"col-12 pt-3"}
-        labelTitle={"Correo electrónico"}
-        id={"nameInput"}
-        inputType={"email"}
-        inputPlaceholder={"Escribe tu correo"}
-        inputPattern={patternTextRegex}
-        labelError={"El campo 'correo electrónico' es requerido"}
-        spanInput={false}
-        register={register}
-        errors={errors}
-        iconSpan={"@"}
-      />
-
-      <InputWithSpan
-        classContainer={"col-12 pt-3"}
-        labelTitle={"Contraseña"}
-        id={"passwordInput"}
-        inputType={"text"}
-        inputPlaceholder={"Escribe tu contraseña"}
-        inputPattern={patternTextRegex}
-        labelError={"El campo 'contraseña' es requerida"}
-        spanInput={false}
-        register={register}
-        errors={errors}
-        iconSpan={"@"}
-      />
-
-      <InputWithSpan
-        classContainer={"col-12 pt-3"}
-        labelTitle={"Repetir contraseña"}
-        id={"repeatInput"}
-        inputType={"password"}
-        inputPlaceholder={"Repita la contraseña"}
-        inputPattern={patternTextRegex}
-        labelError={"El campo 'repetir contraseña' es requerida"}
-        spanInput={false}
-        register={register}
-        errors={errors}
-        iconSpan={"@"}
-      />
-
-      <div className="pt-3">
-        <ButtonSimple
-          buttonType="submit"
-          className="btn btn-primary w-100"
-          text={"Enviar"}
+    <React.Fragment>
+      <TextErrors errorMessage={errorsGlobal} />
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="needs-validation"
+        noValidate
+      >
+        {/*method="POST"*/}
+        <InputWithSpan
+          classContainer={"col-12 "}
+          labelTitle={"Nombre de usuario"}
+          id={"userInput"}
+          inputType={"text"}
+          inputPlaceholder={"Escribe tu nombre de usuario"}
+          inputPattern={patternTextRegex}
+          labelError={"El campo 'nombre de usuario' es requerido"}
+          spanInput={false}
+          register={register}
+          errors={errors}
+          iconSpan={"@"}
         />
-      </div>
 
-      <div className="row justify-content-center pt-3">
-        <div className="col-12 col-md-5 pt-3 pt-md-0 text-center">
-          <ButtonRedirection
-            direction="/login"
-            text="¿Ya tienes una cuenta?"
-            className="text-truncate w-100 text-center cursor-pointer"
+        <InputWithSpan
+          classContainer={"col-12 pt-3"}
+          labelTitle={"Nombre personal"}
+          id={"nameInput"}
+          inputType={"text"}
+          inputPlaceholder={"Escribe tu nombre personal"}
+          inputPattern={patternTextRegex}
+          labelError={"El campo 'nombre personal' es requerido"}
+          spanInput={false}
+          register={register}
+          errors={errors}
+          iconSpan={"@"}
+        />
+
+        <InputWithSpan
+          classContainer={"col-12 pt-3"}
+          labelTitle={"Correo electrónico"}
+          id={"emailInput"}
+          inputType={"email"}
+          inputPlaceholder={"Escribe tu correo"}
+          inputPattern={patternEmailRegex}
+          labelError={"El campo 'correo electrónico' es requerido"}
+          spanInput={false}
+          register={register}
+          errors={errors}
+          iconSpan={"@"}
+        />
+
+        <InputWithSpan
+          classContainer={"col-12 pt-3"}
+          labelTitle={"Contraseña"}
+          id={"passwordInput"}
+          inputType={"password"}
+          inputPlaceholder={"Escribe tu contraseña"}
+          inputPattern={patternTextRegex}
+          labelError={"El campo 'contraseña' es requerida"}
+          spanInput={false}
+          register={register}
+          errors={errors}
+          iconSpan={"@"}
+        />
+
+        <InputWithSpan
+          classContainer={"col-12 pt-3"}
+          labelTitle={"Repetir contraseña"}
+          id={"repeatInput"}
+          inputType={"password"}
+          inputPlaceholder={"Repita la contraseña"}
+          inputPattern={patternTextRegex}
+          labelError={"El campo 'repetir contraseña' es requerida"}
+          spanInput={false}
+          register={register}
+          errors={errors}
+          iconSpan={"@"}
+        />
+
+        <div className="pt-3">
+          <ButtonSimple
+            buttonType="submit"
+            className="btn btn-primary w-100"
+            text={"Enviar"}
           />
         </div>
-      </div>
-    </form>
+
+        <div className="row justify-content-center pt-3">
+          <div className="col-12 col-md-5 pt-3 pt-md-0 text-center">
+            <ButtonRedirection
+              direction="/login"
+              text="¿Ya tienes una cuenta?"
+              className="text-truncate w-100 text-center cursor-pointer"
+            />
+          </div>
+        </div>
+      </form>
+    </React.Fragment>
   );
 };
 

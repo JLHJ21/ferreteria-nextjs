@@ -1,73 +1,87 @@
 "use client";
 
+import { GenericTable } from "@/ui/templates/table";
+import Link from "next/link";
+import { TableColumn } from 'react-data-table-component';
+
+
 type SuppliersBodyProps = {
-    data: { id: number; direction: string; name: string, rif: string, status: string }[];
+    data: { id: number; address: string; name: string, rif: string, status: string }[];
 }
+type Supplier = {
+    id: number; address: string; name: string, rif: string, status: string
+};
 
 const SuppliersBody = (props: SuppliersBodyProps) => {
-    const labelsTitle = ["#", "Dirección", "Nombre", "RIF", "Estado", "Opciones"];
+    const columns: TableColumn<Supplier>[] = [
+        {
+            name: '#',
+            selector: row => row.id,
+            sortable: true,
+            width: "5rem"
+        },
+        {
+            name: 'Dirección',
+            selector: row => row.address,
+            sortable: true,
+            width: "16rem"
+
+        },
+        {
+            name: 'Nombre',
+            selector: row => row.name,
+            sortable: true,
+            width: "16rem"
+        },
+        {
+            name: 'RIF',
+            selector: row => row.rif,
+            sortable: true,
+            width: "12rem"
+        },
+        {
+            name: 'Estado',
+            selector: row => row.status,
+            sortable: true,
+            width: "8rem"
+        },
+        {
+            name: "Opciones",
+            cell: (row) => (
+                <div className="d-flex gap-2 justify-content-center">
+                    <button
+                        className="btn btn-primary btn-sm text-truncate"
+                        onClick={() => console.log("Modificar", row.id)}
+                    >
+                        Modificar
+                    </button>
+                    <button
+                        className="btn btn-danger btn-sm text-truncate"
+                        onClick={() => console.log("Eliminar", row.id)}
+                    >
+                        Eliminar
+                    </button>
+                </div>
+            ),
+            ignoreRowClick: true,
+        },
+    ];
 
     return (
         <div className="container">
             <div className="row px-5 py-3">
                 <div className="d-flex justify-content-between">
                     <p className="fs-5 fw-bold mt-3 mb-0">Proveedores</p>
-                </div>
-                <div className="col-12 pb-2 table-responsive">
-                    <div className="d-flex justify-content-between gap-3 my-3">
-                        <input type="email" className="form-control" placeholder="Buscar..." />
-                        <button className="btn btn-primary">Buscar</button>
-                    </div>
-                    <div className="border rounded p-2">
-
-                        <table className="table table-hover table-sm">
-                            <thead>
-                                <tr>
-                                    {
-                                        labelsTitle.map((label, index) => {
-                                            return (
-                                                <th className={`${label === "Opciones" && "text-center"} `} scope="col" key={index}>{label}</th>
-                                            )
-                                        })
-                                    }
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    props.data.map((item, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <th className="w-10" scope="row">{item.id}</th>
-                                                <td className="">{item.direction}</td>
-                                                <td className="">{item.name}</td>
-                                                <td className="">{item.rif}</td>
-                                                <td className="">{item.status}</td>
-                                                <td className="d-flex gap-2 justify-content-center">
-                                                    <button className="btn btn-primary btn-sm text-truncate">Modificar</button>
-                                                    <button className="btn btn-danger btn-sm text-truncate">Eliminar</button>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-
-
-                        </table>
-
-                    </div>
-
+                    <Link href={'suppliers/add'} >
+                        <button type="button" className="btn btn-primary">Nuevo</button>
+                    </Link>
                 </div>
 
-                <nav className="d-flex justify-content-center mt-2" aria-label="Page navigation example">
-                    <ul className="pagination">
-                        <li className="page-item"><a className="page-link" href="#">Previous</a></li>
-                        <li className="page-item"><a className="page-link" href="#">1</a></li>
-                        <li className="page-item"><a className="page-link" href="#">2</a></li>
-                        <li className="page-item"><a className="page-link" href="#">3</a></li>
-                        <li className="page-item"><a className="page-link" href="#">Next</a></li>
-                    </ul>
-                </nav>
+                <GenericTable<Supplier>
+                    data={props.data}
+                    columns={columns}
+                    filterKeys={["id", "address", "name", "rif"]}
+                />
             </div>
         </div>
     )
